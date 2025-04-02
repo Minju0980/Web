@@ -10,14 +10,16 @@
         <meta name = "author" content = "학번">
         <meta name = "keywords" content = "computer">
         <base href = "http://127.0.0.1.:5500">
+       <script type="text/javascript" src="js_test.js"></script>
     </head>
     <body style = "background-color: white;">
         <div style = "display: flex; justify-content: center;">
             <img src = "logo_steam.svg" width = "200" height = "60">
             <!-- <h3 style = "font-size: 20px; font-weight: bold; font-style: italic; color: white;"><a href = "https://store.steampowered.com/" target = "_blank">게임정보</a>   기본정보   챔피언   새소식  다운로드  (메뉴작성)</h3> -->
+            <nav class="navbar" style="background-color: #e3f2fd;">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="#">네비게이션바</a>
+                  <a class="navbar-brand" href="#">게임소개</a> 
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
@@ -27,7 +29,7 @@
                         <a class="nav-link active" aria-current="page" href="#">홈페이지</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">링크</a>
+                        <a class="nav-link" href="#">다운로드</a>
                       </li>
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -35,13 +37,14 @@
                         </a>
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="#">웹사이트</a></li>
-                          <li><a class="dropdown-item" href="#">Another action</a></li>
+                          <li><a class="dropdown-item" href="#">다른 액션</a></li>
                           <li><hr class="dropdown-divider"></li>
-                          <li><a class="dropdown-item" href="#">Something else here</a></li>
+                          <li><a class="dropdown-item" href="#">아무거나</a></li>
+                          <li><a class = "dropdown-item" href = "https://store.steampowered.com/">스팀</a></li>
                         </ul>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        <a class="nav-link disabled" aria-disabled="true">게시판</a>
                       </li>
                     </ul>
                     <form class="d-flex" role="search">
@@ -50,6 +53,7 @@
                     </form>
                   </div>
                 </div>
+              </nav>
               </nav>
         </div> 
         <hr>
@@ -62,8 +66,8 @@
                 <tbody class = "table-group-divider">
                     <tr bgcolor = "red">
                         <!-- <td width = "80" rowspan = "2">사이온</td> -->
-                         <td>사이온</td>
-                         <td>아리</td><td>아리</td>
+                         <td class="table-primary">사이온</td>
+                         <td class="table-primary">아리</td><td class="table-primary">아리</td>
                         <!-- <td>아리</td>
                         <td>가렌</td>
                         <td>가렌2</td>
@@ -72,9 +76,9 @@
 
                     <!-- <tr bgcolor = "grey"> -->
                    <tr>
-                    <td>카직스</td>
-                    <td>루시안</td>
-                    <td>바이</td>
+                    <td class="table-secondary">카직스</td>
+                    <td class="table-secondary">루시안</td>
+                      <td class="table-secondary">바이</td>
                    </tr>>
                     <!-- <tr>
                         <td bgcolor = "yellow"><b>카직스</b></td>
