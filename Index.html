@@ -10,6 +10,12 @@
         <meta name = "author" content = "학번">
         <meta name = "keywords" content = "computer">
         <base href = "http://127.0.0.1.:5500">
+        <style>
+          table{
+              font-size: 20pt;
+              color: black;
+          }
+      </style>
        <script type="text/javascript" src="js/js_test.js"></script>
        <script type="text/javascript" defer src="js/js_search.js"></script>
        <script type="text/javascript" defer src="js/js_popup.js"></script> <!--head태그에 script태그 삽입-->
@@ -62,6 +68,7 @@
                     </form>
                   </div>
                 </div>
+                <a href="login/login.html" class="btn btn-outline-success" id="login_btn">로그인 하기</a>
               </nav>
               </nav>
         </div> 
@@ -70,24 +77,25 @@
         <a href = "index.html" target = "_blank"><img src= "image/Steam main12.jpg"  class="img-fluid" width = "1280" height = "720"></a>
         </div>
         <div style = "display: flex; justify-content: center;">
-            <table class = "table caption-top" border ="1">
+            <table class = "table" border ="1"  style="caption-side: top;">
                 <caption>인기 캐릭터</caption>
                 <tbody class = "table-group-divider">
                     <tr bgcolor = "red">
+                      
                         <!-- <td width = "80" rowspan = "2">사이온</td> -->
                          <td class="table-primary">사이온</td>
-                         <td class="table-primary">아리</td><td class="table-primary">아리</td>
-                        <!-- <td>아리</td>
-                        <td>가렌</td>
+                         <td class="table-primary"><img src = "image/아리.jpeg" width = "100" height = "50"></td><td class="table-primary">아리</td>
+                        <!-- <td>아리</td> -->
+                        <!-- <td>가렌</td>
                         <td>가렌2</td>
                         <td>가렌3</td> -->
                     </tr>
 
                     <!-- <tr bgcolor = "grey"> -->
                    <tr>
-                    <td class="table-secondary">카직스</td>
-                    <td class="table-secondary">루시안</td>
-                      <td class="table-secondary">바이</td>
+                    <!-- <td class="table-secondary">카직스</td>
+                    <td class="table-secondary">루시안</td> -->
+                    <td class = "table-primary" width = "80" colspan = "3"><a href = "https://store.steampowered.com/" target = "_blank">웹페이지 클릭</td></a>
                    </tr>>
                     <!-- <tr>
                         <td bgcolor = "yellow"><b>카직스</b></td>
@@ -95,13 +103,7 @@
                         <td>루시안2</td>
                         <td colspan = "2"><font size = "13">바이1, 2</font></td>
                     </tr> -->
-                </tbody class = "table-group-divider">
-                <style>
-                    table{
-                        font-size: 20pt;
-                        color: black;
-                    }
-                </style>
+                </tbody  class = "table-group-divider">
             </table>
         </div>
         <hr>
@@ -109,6 +111,7 @@
             <h3 style= "font-size: 20px; font-weight: bold; font-style: italic; color: white; font-family: '굴림';"> Steam 배포  지원  기프트 카드 </h3>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
 
