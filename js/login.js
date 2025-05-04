@@ -39,9 +39,17 @@ const check_input = () => {
         return false;
     }
 
+    if (emailValue.length > 10) {
+        alert('아이디는 10글자 이하로 입력해야 합니다.');
+        return false;
+    }
 
     if (emailValue.length < 5) {
         alert('아이디는 최소 5글자 이상 입력해야 합니다.');
+        return false;
+    }
+    if (passwordValue.length > 15) {
+        alert('비밀번호는 15글자 이하로 입력해야 합니다.');
         return false;
     }
     if (passwordValue.length < 12) {
@@ -57,6 +65,18 @@ const check_input = () => {
     const hasLowerCase = passwordValue.match(/[a-z]+/) !== null;
     if (!hasUpperCase || !hasLowerCase) {
         alert('패스워드는 대소문자를 1개 이상 포함해야 합니다.');
+        return false;
+    }
+    const isRepeatedPattern = (str) =>{
+        const result = str.match(/(...)\1/);
+        return result !==null;
+    };
+    if(isRepeatedPattern(emailValue)){
+        alert('아이디에 3글자 이상 반복된 패턴이 있습니다.');
+        return false;
+    } 
+    if(isRepeatedPattern(passwordValue)){
+        alert('비밀번호에 3글자 이상 반복된 패턴이 있습니다.');
         return false;
     }
 
