@@ -14,6 +14,11 @@ const check_xss = (input) => {
     // Sanitized된 값 반환
     return sanitizedInput;
     }
+
+const isRepeatedPattern = (str) =>{
+    const result = str.match(/(...)\1/);
+    return result !==null;    
+};
 const check_input = () => {
     const loginForm = document.getElementById('login_form');
     const loginBtn = document.getElementById('login_btn');
@@ -67,10 +72,7 @@ const check_input = () => {
         alert('패스워드는 대소문자를 1개 이상 포함해야 합니다.');
         return false;
     }
-    const isRepeatedPattern = (str) =>{
-        const result = str.match(/(...)\1/);
-        return result !==null;
-    };
+
     if(isRepeatedPattern(emailValue)){
         alert('아이디에 3글자 이상 반복된 패턴이 있습니다.');
         return false;
