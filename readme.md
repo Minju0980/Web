@@ -8,7 +8,45 @@ This project is a starting point for a Web application.
 ## 3주차 수업 부트스트랩 적용 완료! (문제 제외)
 - index.html 파일 내용
 [3주차 코드 작성.pdf](https://github.com/user-attachments/files/19970660/3.pdf)
-- 3주차 퀴즈(부트스트랩 추가 수정)
+### 3주차 퀴즈(부트스트랩 추가 수정)
+
+- 네비게이션 바 메뉴에 하이퍼 링크 추가하기
+```javascript
+<li><a class = "dropdown-item" href = "https://store.steampowered.com/">스팀</a></li>
+```
+->드랍다운 메뉴의 한 항목으로 href속성을 이용하여 해당 링크주소를 가리키고 '스팀'을 클릭하면 사용자가 해당 링크주소로 이동하게 된다.
+
+  드랍다운 메뉴를 열고 드랍다운 메뉴항목들 중 '스팀'을 클릭하면 된다.
+
+
+- 네비게이션의 색상 변경하기
+  
+```javascript
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+```
+이 코드에서
+```javascript
+<nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;" data-bs-theme="light">
+```
+
+-> 이 코드로 부트스트랩의 컴포넌트 - 네비게이션 바에서 색상 구성표들 중 하나를 선택하여 수정하였다.
+
+- 테이블에 색상 적용하기
+```javascript
+<tr>
+     <td class="table-primary">사이온</td>
+     <td class="table-primary"><img src = "image/아리.jpeg" width = "100" height = "50"></td>
+     <td class="table-primary">아리</td>
+</tr>
+<tr>
+     <td class = "table-primary" width = "80" colspan = "3"><a href = "https://store.steampowered.com/" target = "_blank">웹페이지 클릭</a></td>
+</tr>
+```
+-> 부트스트랩의 컨텐츠 - 테이블에서 개별 셀에 색상을 지정할 수 있는 코드중 하나를 선택하여 수정하였다. 
+
+-> 아리.jpeg라는 이미지가 들어갔으며, 두번째 행에서는 colspan = "3"으로 3칸 전체를 하나로 합치고 '웹페이지 클릭'이라는 텍스트를 클릭하면 새 창에서 열린다.
+
+
 ## 4주차 수업 자바스크립트 적용 완료! (문제 제외)
 [4주차 코드 작성.pdf](https://github.com/user-attachments/files/19970844/4.pdf)
 - [5주차 코드.pdf](https://github.com/user-attachments/files/19559759/5.pdf)
