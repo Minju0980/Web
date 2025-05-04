@@ -52,7 +52,55 @@ This project is a starting point for a Web application.
 - [5주차 코드.pdf](https://github.com/user-attachments/files/19559759/5.pdf)
 - 10시 기준 5주차 코드에는 네비게이션 바 색상 변경, 표 셀 색상 변경, 하이퍼링크 추가
 js파일 추가, js 파일에 조금 코드 추가?
-## 8주차 퀴즈 및 9주차 입력필터링과 데이터 저장
+## 6주차 퀴즈 및 9주차 입력필터링과 데이터 저장 (8주차 퀴즈 -> 6주차 퀴즈로 수정)
+### 6주차 퀴즈(로그아웃 화면(메인화면으로 이동))
+- index_login.html 파일 작성
+  * index.html 전체 소스코드를 가져오고 head 및 body부터 footer 등 기본 소스코드 유지
+```javascript
+<a href="login/login.html" class="btn btn-outline-success" id="login_btn">로그인 하기</a>
+<a href="login/logout.html" class="btn btn-outline-success" id="logout_btn">로그아웃 하기</a>
+```
+-> '로그인 하기' 버튼 옆에 '로그아웃 하기' 버튼이 위치하도록 '로그인 하기' 코드 아래에 '로그아웃 하기' 코드를 작성한다.
+
+-> '로그인 하기' 버튼을 클릭하면 login 폴더안의 login.html 파일로 이동한다. 
+
+-> '로그아웃 하기' 버튼을 클릭하면 login 폴더안의 logout.html 파일로 이동한다.
+
+- logout.html 파일 작성(로그아웃 화면 (메인화면으로 이동))
+  * 로그아웃 버튼 기능은 클릭하면 index.html로 연결하고 원래 사이트 메인으로 돌아온다.
+```javascript
+    <style>
+        body {
+            background-color: black; /*어두운 배경색*/
+            color: white; /*텍스트 흰색*/
+            display: flex; 
+            flex-direction: column; /*위에서 아래로 정렬(기본 flex-direction에서 반대)*/
+            justify-content: center; /*수직 정렬*/
+            align-items: center;/*수평 정렬*/
+            height: 100vh;/*화면전체높이*/
+            text-align: center;/*텍스트 가운데 정렬*/
+        }
+        .btn-custom {
+            margin-top: 20px;
+            padding: 10px 30px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>로그아웃 메인화면</h1>
+    <a href="../index.html" class="btn btn-outline-light btn-custom">로그아웃</a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+```
+-> index_login.html 기본 소스코드를 유지하면서 위의 코드는 로그아웃 화면을 구성하기 위한 코드이다.
+
+-> head속 style 영역 안에 body 태그에 스타일을 지정한다. 페이지 전체 배경색, 텍스트 정렬 등을 설정하고 btn-custom은 버튼에 여백, 크기, 글자 크기를 지정하는 사용자 정의 클래스다.
+
+-> '로그아웃' 버튼을 클릭하면 상위 폴더의 index.html 파일로 이동할 수 있도록 한다.
+  
 ### 9주차 퀴즈(로그인 입력길이 제한, 입력 제한)
 - 로그인 입력 길이제한(이메일 10글자 이하, 패스워드 15글자 이하 수정)
 
