@@ -94,7 +94,7 @@ function googleSearch() {
 
 -> badword[i]는 현재 검사 중인 비속어이며 searchTerm.includes(badword[i])는 입력된 검색어에 비속어가 포함되어 있는지 확인한다.
 
-## 6주차 퀴즈 및 9주차 입력필터링과 데이터 저장 (8주차 퀴즈 -> 6주차 퀴즈로 수정)
+## 6주차 FORM을 통한 데이터 전
 ### 6주차 퀴즈(로그아웃 화면(메인화면으로 이동))
 - index_login.html 파일 작성
   * index.html 전체 소스코드를 가져오고 head 및 body부터 footer 등 기본 소스코드 유지
@@ -142,7 +142,10 @@ function googleSearch() {
 -> head속 style 영역 안에 body 태그에 스타일을 지정한다. 페이지 전체 배경색, 텍스트 정렬 등을 설정하고 btn-custom은 버튼에 여백, 크기, 글자 크기를 지정하는 사용자 정의 클래스다.
 
 -> '로그아웃' 버튼을 클릭하면 상위 폴더의 index.html 파일로 이동할 수 있도록 한다.
-  
+
+## 9주차 입력필터링 및 데이터 저장
+[9주차 코드 작성.pdf](https://github.com/user-attachments/files/20073819/9.pdf)
+
 ### 9주차 퀴즈(로그인 입력길이 제한, 입력 제한)
 - 로그인 입력 길이제한(이메일 10글자 이하, 패스워드 15글자 이하 수정)
 
