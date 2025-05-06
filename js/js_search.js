@@ -6,7 +6,22 @@ function search_message(){
 }
 
 function googleSearch() {
-    const searchTerm = document.getElementById("search_input").value; // 검색어로 설정
+    const searchTerm = document.getElementById("search_input").value.trim; // 검색어로 설정, 공백 제거
+    const badword = ["욕1", "욕2", "비속어","안 좋은말"]; //비속어 목록 배열
+
+    //입력값이 비어있으면 함수 중단
+    if (searchTerm.length === 0){
+        alert("검색어를 입력하세요");
+        return false;
+    }
+
+    //비속어 검사사
+    for(let i = 0; i<badword.length; i++){
+        if (searchTerm.includes(badword)[i]){
+            alert("부적절한 검색어입니다");
+            return false;
+        }
+    }
     const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
     // 새 창에서 구글 검색을 수행
     window.open(googleSearchUrl, "_blank"); // 새로운 창에서 열기.
