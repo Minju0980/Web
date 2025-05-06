@@ -94,7 +94,7 @@ function googleSearch() {
 
 -> badword[i]는 현재 검사 중인 비속어이며 searchTerm.includes(badword[i])는 입력된 검색어에 비속어가 포함되어 있는지 확인한다.
 
-## 6주차 FORM을 통한 데이터 전
+## 6주차 FORM을 통한 데이터 전송
 ### 6주차 퀴즈(로그아웃 화면(메인화면으로 이동))
 - index_login.html 파일 작성
   * index.html 전체 소스코드를 가져오고 head 및 body부터 footer 등 기본 소스코드 유지
