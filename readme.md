@@ -50,13 +50,50 @@ This project is a starting point for a Web application.
 ## 4주차 수업 자바스크립트 적용 완료! 
 [4주차 코드 작성.pdf](https://github.com/user-attachments/files/19970844/4.pdf)
 ### 4주차 퀴즈(식별자 수정)
+```javascript
+document.getElementById("search_button_msg").addEventListener('click', search_message);
+function search_message(){
+    let message = "검색을 수행합니다!";
+    alert(message);
+}
+```
+-> 원래 식별자인 search_btn에서 search_button_msg로 수정하였고 index.html에서도 id식별자를 수정하였다.
 
+-> let 변수를 활용하여 문자열 "검색을 수행합니다"를 저장하였으며 변수를 출력하는 형태로 수정하였다.
 
 ## 5주차 수업 검색창 확장 및 팝업창
 - [5주차 코드.pdf](https://github.com/user-attachments/files/19559759/5.pdf)
-### 5주차 (검색어 공백/비속어 검사)
 
-js파일 추가, js 파일에 조금 코드 추가?
+  js파일 추가, js 파일에 조금 코드 추가?
+  
+### 5주차 (검색어 공백/비속어 검사)
+- googleSearch() 함수를 수정하여 공백검사와 비속어 검사를 할 수 있게 하였다.
+- if문, 반복문, 배열 활용
+```javascript
+function googleSearch() {
+    const searchTerm = document.getElementById("search_input").value.trim(); // 검색어로 설정, 공백 제거
+    const badword = ["욕1", "욕2", "비속어","안 좋은말"]; //비속어 목록 배열
+
+    //입력값이 비어있으면 함수 중단
+    if (searchTerm.length === 0){
+        alert("검색어를 입력하세요");
+        return false;
+    }
+
+    //비속어 검사
+    for(let i = 0; i < badword.length; i++){
+        if (searchTerm.includes(badword[i])){
+            alert("부적절한 검색어입니다");
+            return false;
+        }
+    }
+```
+-> .trim()으로 앞뒤 공백 제거, badword 배열에 원하는 비속어를 저장하고 여기에 포함된 단어가 검색어에 있으면 검색을 막는다.
+
+-> 문자 길이가 0이면 함수를 중단한다./ badword 배열에 저장된 비속어들을 하나씩 검사하는 반복문을 만들고 0부터 시작해서 badword.length - 1까지 반복한다.
+
+-> badword[i]는 현재 검사 중인 비속어이며 searchTerm.includes(badword[i])는 입력된 검색어에 비속어가 포함되어 있는지 확인한다.
+
 ## 6주차 퀴즈 및 9주차 입력필터링과 데이터 저장 (8주차 퀴즈 -> 6주차 퀴즈로 수정)
 ### 6주차 퀴즈(로그아웃 화면(메인화면으로 이동))
 - index_login.html 파일 작성
