@@ -54,6 +54,8 @@ This project is a starting point for a Web application.
 
 ## 5주차 수업 검색창 확장 및 팝업창
 - [5주차 코드.pdf](https://github.com/user-attachments/files/19559759/5.pdf)
+### 5주차 (검색어 공백/비속어 검사)
+
 js파일 추가, js 파일에 조금 코드 추가?
 ## 6주차 퀴즈 및 9주차 입력필터링과 데이터 저장 (8주차 퀴즈 -> 6주차 퀴즈로 수정)
 ### 6주차 퀴즈(로그아웃 화면(메인화면으로 이동))
