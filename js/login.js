@@ -19,12 +19,12 @@ const check_xss = (input) => {
     // Sanitized된 값과 원본 입력 값 비교
     if (sanitizedInput !== input) {
     // XSS 공격 가능성 발견 시 에러 처리
-    alert('XSS 공격 가능성이 있는 입력값을 발견했습니다.');
-    return false;
+     alert('XSS 공격 가능성이 있는 입력값을 발견했습니다.');
+     return false;
     }
     // Sanitized된 값 반환
     return sanitizedInput;
-    }
+};
 
 const isRepeatedPattern = (str) =>{
     const result = str.match(/(...)\1/);
@@ -33,7 +33,8 @@ const isRepeatedPattern = (str) =>{
 function setCookie(name, value, expiredays) {
     var date = new Date();
     date.setDate(date.getDate() + expiredays);
-    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + ";expires=" + date.toUTCString() + "; path=/" + ";SameSite=None; Secure";
+    // document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + ";expires=" + date.toUTCString() + "; path=/" + ";SameSite=None; Secure";
+    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + ";expires=" + date.toUTCString() + "; path=/";
 }
 function getCookie(name){
     var cookie = document.cookie;
@@ -42,13 +43,80 @@ function getCookie(name){
         var cookie_array = cookie.split(";");
         for(var index in cookie_array){
             var cookie_name = cookie_array[index].split("=");
-            if(cookie_name[0] == "id"){
-                return cookie_name[1];
+            if(cookie_name[0].trim() === name){
+                return decodeURIComponent(cookie_name[1]);
             }
         }
     }
-    return;
+    return null;
 }
+
+function login_failed() {
+    let cnt = (parseInt(getCookie("fail_cnt")) || 0) + 1;
+    setCookie("fail_cnt", cnt, 1);
+
+    if (cnt >= 3) {
+        setCookie("lock_time", Date.now() + 4 * 60 * 1000, 1);
+        alert("3회 이상 실패, 4분간 로그인 제한");
+    } else {
+        alert(`로그인 실패 (${cnt}/3)`);
+    }
+
+    document.getElementById("login_status").innerText = `실패 횟수: ${cnt}`;
+}
+
+function is_login_locked() {
+    return Date.now() < (parseInt(getCookie("lock_time")) || 0);
+}
+
+function login_count(){
+    let loginCount = parseInt(getCookie("login_cnt"))||0;
+    loginCount += 1;
+    setCookie("login_cnt", loginCount, 7);
+    console.log("로그인 횟수", loginCount);
+}
+
+function logout_count() {
+    let logoutCount = parseInt(getCookie("logout_cnt"))||0;
+    logoutCount += 1;
+    setCookie("logout_cnt", logoutCount, 7);
+    console.log("로그아웃 횟수", logoutCount);
+    console.log("현재 쿠키:", document.cookie);
+}
+
+function session_del() {//세션 삭제
+   if (sessionStorage) {
+     sessionStorage.removeItem("Session_Storage_test");
+     alert('로그아웃 버튼 클릭 확인 : 세션 스토리지를 삭제합니다.');
+    } else {
+          alert("세션 스토리지 지원 x");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    // 로그인 버튼 처리
+    const loginBtn = document.getElementById("login_btn");
+    if (loginBtn) {
+        loginBtn.addEventListener("click", () => {
+            login_count();
+            check_input();
+        });
+    }
+
+    // 로그아웃 버튼 처리
+    const logoutBtn = document.getElementById("logout_btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            logout_count(); 
+            session_del();
+            setTimeout(() => {
+                window.location.href = "../index.html";
+            }, 100);
+        });
+    } else {
+        console.log("로그아웃 버튼이 없습니다.");
+    }
+});
 
 const check_input = () => {
     const loginForm = document.getElementById('login_form');
@@ -68,12 +136,30 @@ const check_input = () => {
     // 전역 변수 추가, 맨 위 위치
     const idsave_check = document.getElementById('idSaveCheck');
 
+    if (is_login_locked()) {
+      const remainingSec = Math.ceil((getCookie("lock_time") - Date.now()) / 1000);
+      alert(`로그인 제한 중입니다. (${remainingSec}초 남음)`);
+
+      const status = document.getElementById("login_status");
+      if (status) status.innerText = `로그인 제한 중 (${remainingSec}초 남음)`;
+
+      return false;
+    }
+
     if (emailValue === '') {
         alert('이메일을 입력하세요.');
+        login_failed();
         return false;
     }
     if (passwordValue === '') {
         alert('비밀번호를 입력하세요.');
+        login_failed();
+        return false;
+    }
+
+    if(emailValue !== "parkmin@p" || passwordValue !== "A!sdfghzxcvn"){
+        alert("아이디 또는 비밀번호가 틀렸습니다.");
+        login_failed();
         return false;
     }
 
@@ -137,10 +223,31 @@ const check_input = () => {
         console.log('이메일:', emailValue);
         console.log('비밀번호:', passwordValue);
 
+        setCookie("fail_cnt", 0, -1);
+        setCookie("lock_time", "", -1);
+
+        alert("로그인 성공!");
         session_set(); // 세션 생성
         loginForm.submit();
     };
 
-    document.getElementById("login_btn").addEventListener('click', check_input);
+    // document.getElementById("login_btn").addEventListener('click', () => {
+    //     login_count();
+    //     check_input();
+    // });
+
+    
+
+    // document.addEventListener("DOMContentLoaded", function(){
+    //     const logoutBtn = document.getElementById("logout_btn");
+    //     if (logoutBtn){
+    //         logoutBtn.addEventListener("click", () => {
+    //             window.location.href = "../index.html";
+    //         });
+    //     }else{
+    //         console.log("로그아웃 버튼이 없습니다.");
+    //     }
+    // });
+    
 
 
