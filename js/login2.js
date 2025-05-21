@@ -2,19 +2,20 @@ import { session_set, session_get, session_check } from './session.js';
 import { encrypt_text, decrypt_text } from './js_crypto.js';
 import { generateJWT, checkAuth } from './jwt_token.js';
 
-function init(){ // 로그인 폼에 쿠키에서 가져온 아이디 입력
-    const emailInput = document.getElementById('typeEmailX');
-    const idsave_check = document.getElementById('idSaveCheck');
-    let get_id = getCookie("id");
-    if(get_id) {
-      emailInput.value = get_id;
-      idsave_check.checked = true;
-    }
-    session_check(); // 세션 유무 검사
-}
+// function init(){ // 로그인 폼에 쿠키에서 가져온 아이디 입력
+//     const emailInput = document.getElementById('typeEmailX');
+//     const idsave_check = document.getElementById('idSaveCheck');
+//     let get_id = getCookie("id");
+//     if(get_id) {
+//       emailInput.value = get_id;
+//       idsave_check.checked = true;
+//     }
+//     session_check(); // 세션 유무 검사
+// }
 
 document.addEventListener('DOMContentLoaded', () => {
-  init();
+  checkAuth();
+  init_logined();
 });
  
 function init_logined(){
@@ -256,31 +257,3 @@ const check_input = () => {
         localStorage.setItem('jwt_token', jwtToken);
         loginForm.submit();
     };
-
-// document.addEventListener("DOMContentLoaded", () => {
-//      const loginBtn = document.querySelector("#login_btn"); 
-//      if (loginBtn) {
-//          loginBtn.addEventListener("click", session_set);
-//         }
-// });
-
-    // document.getElementById("login_btn").addEventListener('click', () => {
-    //     login_count();
-    //     check_input(); 
-    // });
-
-    
-
-    // document.addEventListener("DOMContentLoaded", function(){
-    //     const logoutBtn = document.getElementById("logout_btn");
-    //     if (logoutBtn){
-    //         logoutBtn.addEventListener("click", () => {
-    //             window.location.href = "../index.html";
-    //         });
-    //     }else{
-    //         console.log("로그아웃 버튼이 없습니다.");
-    //     }
-    // });
-    
-
-
