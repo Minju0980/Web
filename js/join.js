@@ -1,6 +1,10 @@
 import { session_set2 } from './session.js';
 
 function join(){ // 회원가입 기능
+  const nameRegex = /^[가-힣]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const pwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
   let form = document.querySelector("#join_form"); // 로그인 폼 식별자
   let name = document.querySelector("#form3Example1c");
   let email = document.querySelector("#form3Example3c");
@@ -13,6 +17,34 @@ function join(){ // 회원가입 기능
      alert("회원가입 폼에 모든 정보를 입력해주세요.");
     }
     else{
+      if (!nameRegex.test(name.value)) { // 이름 검사
+        alert("이름은 한글만 입력 가능합니다.");
+        name.focus();
+        return;
+      }
+
+      if (!emailRegex.test(email.value)) { // 이메일 검사
+        alert("이메일 형식이 올바르지 않습니다.");
+        email.focus();
+        return;
+      }
+
+      if (!pwRegex.test(password.value)) { // 비밀번호 검사
+       alert("비밀번호는 8자 이상이며 대소문자, 숫자, 특수문자를 모두 포함해야 합니다.");
+       password.focus();
+       return;
+      }
+
+      if (password.value !== re_password.value) { // 비밀번호 일치 검사
+       alert("비밀번호가 일치하지 않습니다.");
+       re_password.focus();
+       return;
+      }
+
+      if (!agree.checked) { // 약관 동의 확인
+       alert("약관에 동의하셔야 가입이 가능합니다.");
+       return;
+      }
         const newSignUp = new SignUp(name.value, email.value, password.value, re_password.value); // 회원가입 정보 객체 생성
         session_set2(newSignUp); // 세션 저장 및 객체 전달
         form.submit(); // 폼 실행
