@@ -1,6 +1,7 @@
 import { session_set, session_get, session_check } from './session.js';
 import { encrypt_text, decrypt_text } from './js_crypto.js';
 import { generateJWT, checkAuth } from './jwt_token.js';
+// import { encryptText,decryptText } from "./Crypto2.js";
 
 // function init(){ // 로그인 폼에 쿠키에서 가져온 아이디 입력
 //     const emailInput = document.getElementById('typeEmailX');
@@ -13,14 +14,26 @@ import { generateJWT, checkAuth } from './jwt_token.js';
 //     session_check(); // 세션 유무 검사
 // }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   checkAuth();
   init_logined();
+  await init_logined2()
 });
  
 function init_logined(){
  if(sessionStorage){
      decrypt_text(); // 복호화 함수
+    }
+    else{
+      alert("세션 스토리지 지원 x");
+    }
+}
+
+async function init_logined2(){
+ if(sessionStorage){
+    const base64 = sessionStorage.getItem("Session_Storage_pass2");
+    const result = await decryptText(base64); // await 사용
+    console.log("복호화 결과:", result);
     }
     else{
       alert("세션 스토리지 지원 x");
@@ -105,20 +118,24 @@ function logout_count() {
 
 function session_del() {//세션 삭제
    if (sessionStorage) {
-     sessionStorage.removeItem("Session_Storage_test");
+    sessionStorage.removeItem("Session_Storage_id");
+    // sessionStorage.removeItem("Session_Storage_object");
+    sessionStorage.removeItem("Session_Storage_pass");
+    sessionStorage.removeItem("Session_Storage_pass2");
+    localStorage.removeItem("jwt_token");
      alert('로그아웃 버튼 클릭 확인 : 세션 스토리지를 삭제합니다.');
     } else {
           alert("세션 스토리지 지원 x");
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     // 로그인 버튼 처리
     const loginBtn = document.getElementById("login_btn");
     if (loginBtn) {
-        loginBtn.addEventListener("click", () => {
+        loginBtn.addEventListener("click", async () => {
             login_count();
-            check_input();
+            await check_input();
         }); 
     }
 
@@ -137,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-const check_input = () => {
+const check_input = async () => {
     const loginForm = document.getElementById('login_form');
     const loginBtn = document.getElementById('login_btn');
     const emailInput = document.getElementById('typeEmailX');
@@ -253,7 +270,38 @@ const check_input = () => {
 
         alert("로그인 성공!");
         session_set(); // 세션 생성
-        // await session_set2();
         localStorage.setItem('jwt_token', jwtToken);
         loginForm.submit();
     };
+
+// export async function init_logined_page() {
+//   const encryptedData = sessionStorage.getItem("Session_Storage_pass2");
+
+//   const infoEl = document.getElementById("user_info");
+//   if (!infoEl) {
+//     console.warn("#user_info 요소가 없습니다.");
+//     return;
+//   }
+
+//   if (!encryptedData) {
+//     infoEl.innerText = "로그인 정보가 없습니다.";
+//     return;
+//   }
+
+//   const password = prompt("복호화를 위해 로그인 비밀번호를 입력해주세요:");
+//   if (!password) {
+//     infoEl.innerText = "복호화 실패: 비밀번호 없음";
+//     return;
+//   }
+
+//   try {
+//     const decrypted = await decryptText(password, encryptedData);
+//     const data = JSON.parse(decrypted); // { email }
+
+//     infoEl.innerText = `안녕하세요, ${data.email}님!`;
+//   } catch (e) {
+//     console.error("복호화 오류:", e);
+//     infoEl.innerText = "복호화에 실패했습니다.";
+//   }
+// }
+

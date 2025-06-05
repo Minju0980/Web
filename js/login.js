@@ -5,6 +5,11 @@ import { generateJWT, checkAuth } from './jwt_token.js';
 function init(){ // 로그인 폼에 쿠키에서 가져온 아이디 입력
     const emailInput = document.getElementById('typeEmailX');
     const idsave_check = document.getElementById('idSaveCheck');
+    if (!emailInput || !idsave_check) {
+        console.log("이 페이지에는 로그인 폼이 없습니다.");
+        return;
+    }
+
     let get_id = getCookie("id");
     if(get_id) {
       emailInput.value = get_id;
@@ -104,14 +109,18 @@ function logout_count() {
 
 function session_del() {//세션 삭제
    if (sessionStorage) {
-     sessionStorage.removeItem("Session_Storage_test");
+     sessionStorage.removeItem("Session_Storage_id");
+    // sessionStorage.removeItem("Session_Storage_object");
+    sessionStorage.removeItem("Session_Storage_pass");
+    sessionStorage.removeItem("Session_Storage_pass2");
+    localStorage.removeItem("jwt_token");
      alert('로그아웃 버튼 클릭 확인 : 세션 스토리지를 삭제합니다.');
     } else {
           alert("세션 스토리지 지원 x");
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     // 로그인 버튼 처리
     const loginBtn = document.getElementById("login_btn");
     if (loginBtn) {

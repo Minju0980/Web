@@ -31,6 +31,18 @@ export function decrypt_text(){
  const k = "key"; // 서버의 키
  const rk = k.padEnd(32, " "); // AES256은 key 길이가 32
  const eb = session_get();
- const b =  decodeByAES256(rk, eb); // 실제 복호화
- console.log(b);
+//  const b =  decodeByAES256(rk, eb); // 실제 복호화
+//  console.log(b);
+if (!eb) {
+    console.error("세션에 암호화된 데이터가 없습니다.");
+    return;
+  }
+
+  try {
+    const b = decodeByAES256(rk, eb);
+    console.log("복호화 결과:", b);
+  } catch (e) {
+    console.error("복호화 실패:", e);
+  }
+
 }
