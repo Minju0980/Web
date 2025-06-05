@@ -1,4 +1,4 @@
-import { encrypt_text, decrypt_text } from './js_crypto.js';
+import { encrypt_text, decrypt_text, decodeByAES256 } from './js_crypto.js';
 
 export async function session_set() { //세션 저장
     // let session_id = document.querySelector("#typeEmailX"); // DOM 트리에서 ID 검색
@@ -43,7 +43,7 @@ export function session_set2(obj) { //세션 저장
       console.log("objString:", objString);
       // let en_text = encrypt_text(session_pass.value);
       let en_text = encrypt_text(objString); // 암호화
-      sessionStorage.setItem("Session_Storage_join", objString);
+      // sessionStorage.setItem("Session_Storage_join", objString);
       sessionStorage.setItem("Session_Storage_join2", en_text);
       console.log("암호화된 회원정보 저장됨:", en_text);
       // sessionStorage.setItem("Session_Storage_id", session_id.value);
@@ -83,7 +83,11 @@ export function decrypt_join() {
 
   try {
     const b = decodeByAES256(rk, eb);
-    console.log("복호화된 회원가입 정보:", b);
+    const user = JSON.parse(b); 
+    console.log("복호화된 회원가입 정보:", user);
+    console.log("이름:", user._name);
+    console.log("이메일:", user._email);
+    console.log("비밀번호:", user._password);
   } catch (e) {
     console.error("복호화 실패:", e);
   }
