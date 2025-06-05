@@ -1,4 +1,4 @@
-import { session_set, session_get, session_check } from './session.js';
+import { session_set, session_get, session_check, decrypt_join } from './session.js';
 import { encrypt_text, decrypt_text } from './js_crypto.js';
 import { generateJWT, checkAuth } from './jwt_token.js';
 // import { encryptText,decryptText } from "./Crypto2.js";
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   checkAuth();
   init_logined();
   await init_logined2()
+  decrypt_join()
 });
  
 function init_logined(){
