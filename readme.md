@@ -199,6 +199,49 @@ function googleSearch() {
 
 ### 10주차 퀴즈
 
+```javascript
+function getCookie(name){
+    var cookie = document.cookie;
+    console.log("쿠키를 요청합니다.");
+    if(cookie !=""){
+        var cookie_array = cookie.split(";");
+        for(var index in cookie_array){
+            var cookie_name = cookie_array[index].split("=");
+            if(cookie_name[0].trim() === name){
+                return decodeURIComponent(cookie_name[1]);
+            }
+        }
+    }
+    return null;
+}
+```
+-> 기존에 있던 get함수를 재활용하였으며 이 함수는 name이라는 인자를 받아서 해당 이름의 쿠키값을 반환한다. if(cookie_name[0].trim() === name) 이 조건문을 
+통해 쿠키 배열에서 원하는 쿠키이름과 일치하는 항목을 찾아낸다. 그 값을 decodeURIComponent()을 통해 디코딩한 후 반환한다.
+
+```javascript
+function login_count(){
+    let loginCount = parseInt(getCookie("login_cnt"))||0;
+    loginCount += 1;
+    setCookie("login_cnt", loginCount, 7);
+}
+```
+-> getCookie("login_cnt")는 "login_cnt"라는 이름의 쿠키값을 읽어오고 값이 없으면 null을 반환한다. 그리고 parseInt()은 가져온 문자열을 정수로 변환하고
+그 결과를 변수 loginCount에 저장한다.
+
+-> 변수에 += 1을 하여 로그인 횟수를 1 증가시킨다. 그리고 setCookie("login_cnt", loginCount, 7)을 하여 "login_cnt" 쿠키이름으로 값을 저장하고 7일동안 유지된다.
+
+```javascript
+function logout_count() {
+    let logoutCount = parseInt(getCookie("logout_cnt"))||0;
+    logoutCount += 1;
+    setCookie("logout_cnt", logoutCount, 7);    
+}
+```
+-> getCookie("logout_cnt")는 "logout_cnt"라는 이름의 쿠키값을 읽어오고 값이 없으면 null을 반환한다. 그리고 parseInt()은 가져온 문자열을 정수로 변환하고
+그 결과를 변수 logoutCount에 저장한다.
+
+-> 변수에 += 1을 하여 로그아웃 횟수를 1 증가시킨다. 그리고 setCookie("logout_cnt", logoutCount, 7)을 하여 "logout_cnt" 쿠키이름으로 값을 저장하고 7일동안 유지된다.
+
 ## 11주차(암호화와 보안토큰)
 
 ### 11주차 퀴즈
