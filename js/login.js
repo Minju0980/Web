@@ -190,7 +190,7 @@ const check_input = () => {
         return false;
     }
 
-    if(emailValue !== "parkmin@p" || passwordValue !== "A!sdfghzxcvn"){
+    if(emailValue !== "parkmin@p" || passwordValue !== "A!sdfghzxcv2"){
         alert("아이디 또는 비밀번호가 틀렸습니다.");
         login_failed();
         return false;
@@ -261,35 +261,10 @@ const check_input = () => {
 
         alert("로그인 성공!");
         session_set(); // 세션 생성
-        // await session_set2();
         localStorage.setItem('jwt_token', jwtToken);
         loginForm.submit();
     };
 
-// document.addEventListener("DOMContentLoaded", () => {
-//      const loginBtn = document.querySelector("#login_btn"); 
-//      if (loginBtn) {
-//          loginBtn.addEventListener("click", session_set);
-//         }
-// });
-
-    // document.getElementById("login_btn").addEventListener('click', () => {
-    //     login_count();
-    //     check_input(); 
-    // });
-
-    
-
-    // document.addEventListener("DOMContentLoaded", function(){
-    //     const logoutBtn = document.getElementById("logout_btn");
-    //     if (logoutBtn){
-    //         logoutBtn.addEventListener("click", () => {
-    //             window.location.href = "../index.html";
-    //         });
-    //     }else{
-    //         console.log("로그아웃 버튼이 없습니다.");
-    //     }
-    // });
     
 
 

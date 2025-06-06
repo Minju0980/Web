@@ -275,34 +275,3 @@ const check_input = async () => {
         loginForm.submit();
     };
 
-// export async function init_logined_page() {
-//   const encryptedData = sessionStorage.getItem("Session_Storage_pass2");
-
-//   const infoEl = document.getElementById("user_info");
-//   if (!infoEl) {
-//     console.warn("#user_info 요소가 없습니다.");
-//     return;
-//   }
-
-//   if (!encryptedData) {
-//     infoEl.innerText = "로그인 정보가 없습니다.";
-//     return;
-//   }
-
-//   const password = prompt("복호화를 위해 로그인 비밀번호를 입력해주세요:");
-//   if (!password) {
-//     infoEl.innerText = "복호화 실패: 비밀번호 없음";
-//     return;
-//   }
-
-//   try {
-//     const decrypted = await decryptText(password, encryptedData);
-//     const data = JSON.parse(decrypted); // { email }
-
-//     infoEl.innerText = `안녕하세요, ${data.email}님!`;
-//   } catch (e) {
-//     console.error("복호화 오류:", e);
-//     infoEl.innerText = "복호화에 실패했습니다.";
-//   }
-// }
-
