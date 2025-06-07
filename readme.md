@@ -322,7 +322,7 @@ if (is_login_locked()) {
     }
 ```
 
--> check_xss함수에 들어있는 조건문이다. is_login_locked() 함수가 true를 반환하는 경우는 현재 시간이 쿠키에 저장된 lock_time보다 이전이고 로그인 제한 시간이 아직 남아있을 때라는 것이다.
+-> check_input함수에 들어있는 조건문이다. is_login_locked() 함수가 true를 반환하는 경우는 현재 시간이 쿠키에 저장된 lock_time보다 이전이고 로그인 제한 시간이 아직 남아있을 때라는 것이다.
 
 -> getcookie("lock_time")은 lock_time이라는 쿠키이름의 값을 가져오고 제한이 풀리는 시간(밀리초 기준)을 뜻하며 Date.now()는 현재 시간(밀리초 기준)이다. 나누기 1000을 하여 초 단위로 바꾸고 
 Math.ceil()은 소수점을 올려 남은 초를 반올림 없이 표시한다. 이를 remainingSec이라는 변수에 저장한다.
@@ -421,9 +421,58 @@ async function decryptText(base64) {
 
 -> crypto.subtle.decrypt()를 사용하여 AES-GCM 방식으로 복호화를 시도한다. 성공하면 결과는 ArrayBuffer이고 TextDecoder()를 사용해 UTF-8문자열로 바꾼다. 
 
+```javascript
+sync function init_logined2(){
+ if(sessionStorage){
+    const base64 = sessionStorage.getItem("Session_Storage_pass2");
+    const result = await decryptText(base64); // await 사용
+    console.log("복호화 결과:", result);
+    }
+    else{
+      alert("세션 스토리지 지원 x");
+    }
+}
+```
+-> 비동기 함수로, login2.js에 있는 함수이며 로그인 후 페이지에서 세션 스토리지의 암호화된 데이터를 복호화하기 위한 초기화 함수이다.
+
+```javascript
+export async function session_set() { //세션 저장
+    // let session_id = document.querySelector("#typeEmailX"); // DOM 트리에서 ID 검색
+    let session_pass = document.querySelector("#typePasswordX"); // DOM 트리에서 pass 검색
+    let session_pass2 = document.querySelector("#typePasswordX");
+    let id = document.querySelector("#typeEmailX");
+    let password = document.querySelector("#typePasswordX");
+    let random = new Date(); // 랜덤 타임스탬프
+    const obj = { // 객체 선언
+    id : id.value,
+    otp : random
+    }
+// 다음 페이지 계속 작성하기
+    if (sessionStorage) {
+        let en_text = encrypt_text(session_pass.value);
+        let en_text2 = await encryptText(session_pass2.value);
+      console.log("암호화 결과(Session_Storage_pass2):", en_text2); 
+      sessionStorage.setItem("Session_Storage_id", id.value);
+      sessionStorage.setItem("Session_Storage_pass", en_text);
+      sessionStorage.setItem("Session_Storage_pass2", en_text2);
+    } else {
+       alert("로컬 스토리지 지원 x");
+    }
+}
+```
+-> session_pass2라는 변수로 입력된 비밀번호 요소를 참조하고 브라우저가 세션 스토리지를 지원하는지 확인한 다음에 en_text2라는 변수에 패스워드 값을 비동기적으로 암호화한 값을 저장하고 세션 스토리지에 Session_Storage_pass2라는 이름으로 en_text2라는 값을 저장한다.
+
+login2.js에 있는 check_input이나 init_logined2에 async 키워드를 붙인다.
+
+- JWT 토큰을 삭제하는 함수 구현하기
+
+login2.js에 있는 session_del()함수에 localStorage.removeItem("jwt_token");이 코드를 넣어 세션과 함께 토큰도 삭제되도록 하였다.
+
 ## 12주차(모듈화 및 클래스)
 
 ### 12주차 퀴즈
+- 
+
 
 ## 13주차(웹오픈 API)
 
