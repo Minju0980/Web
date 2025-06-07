@@ -194,6 +194,15 @@ function googleSearch() {
 즉, /(...)\1/은 정확히 3글자로 된 동일한 문자열이 반복해서 나오는지 확인하는 것이다.
 
 -> str.match(...)는 매칭되는 배열, 아니면 null을 반환한다.
+
+```javascript
+if(emailValue !== "parkmin@p" || passwordValue !== "A!sdfghzxcv2"){
+        alert("아이디 또는 비밀번호가 틀렸습니다.");
+        login_failed();
+        return false;
+    }
+```
+-> 로그인 폼에 아이디와 비밀번호를 이대로 입력해야 로그인 할 수 있다.
    
 ## 10주차 쿠키와 세션
 
