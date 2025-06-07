@@ -146,9 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
         logoutBtn.addEventListener("click", () => {
             logout_count(); 
             session_del();
-            setTimeout(() => {
-                window.location.href = "../index.html";
-            }, 100);
         });
     } else {
         console.log("로그아웃 버튼이 없습니다.");

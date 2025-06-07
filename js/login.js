@@ -96,15 +96,12 @@ function login_count(){
     let loginCount = parseInt(getCookie("login_cnt"))||0;
     loginCount += 1;
     setCookie("login_cnt", loginCount, 7);
-    console.log("로그인 횟수", loginCount);
 }
 
 function logout_count() {
     let logoutCount = parseInt(getCookie("logout_cnt"))||0;
     logoutCount += 1;
     setCookie("logout_cnt", logoutCount, 7);
-    console.log("로그아웃 횟수", logoutCount);
-    console.log("현재 쿠키:", document.cookie);
 }
 
 function session_del() {//세션 삭제
@@ -136,9 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
         logoutBtn.addEventListener("click", () => {
             logout_count(); 
             session_del();
-            setTimeout(() => {
-                window.location.href = "../index.html";
-            }, 100);
         });
     } else {
         console.log("로그아웃 버튼이 없습니다.");
