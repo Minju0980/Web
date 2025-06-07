@@ -198,7 +198,8 @@ function googleSearch() {
 ## 10주차 쿠키와 세션
 
 ### 10주차 퀴즈
-
+- 로그인/ 로그아웃 횟수 쿠키 저장하기
+  
 ```javascript
 function getCookie(name){
     var cookie = document.cookie;
@@ -242,9 +243,99 @@ function logout_count() {
 
 -> 변수에 += 1을 하여 로그아웃 횟수를 1 증가시킨다. 그리고 setCookie("logout_cnt", logoutCount, 7)을 하여 "logout_cnt" 쿠키이름으로 값을 저장하고 7일동안 유지된다.
 
+```javascript
+document.addEventListener("DOMContentLoaded", () => {
+    // 로그인 버튼 처리
+    const loginBtn = document.getElementById("login_btn");
+    if (loginBtn) {
+        loginBtn.addEventListener("click", () => {
+            login_count();
+            check_input();
+        }); 
+    }
+
+    // 로그아웃 버튼 처리
+    const logoutBtn = document.getElementById("logout_btn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            logout_count(); 
+            session_del();
+        });
+    } else {
+        console.log("로그아웃 버튼이 없습니다.");
+    }
+});
+```
+
+-> HTML 문서의 모든 DOM 요소가 로드된 후 실행되는 이벤트 리스너이며 식별자가 login_btn인 로그인 버튼 요소를 가져오고 로그인 버튼이 존재할 경우에 클릭 이벤트를 추가한다.
+로그인 횟수를 카운팅하는 쿠키 함수인 login_count()와 로그인 입력값을 확인 및 처리하는 함수인 check_input()이 실행된다.
+
+-> 식별자가 logout_btn인 로그아웃 버튼 요소를 가져오고 로그아웃 버튼이 존재할 경우에 클릭 이벤트를 추가한다. 로그아웃 횟수를 카운팅하는 쿠키 함수인 logout_count()와 
+세션 스토리지에 저장된 로그인 데이터를 삭제하는 함수인 session_del()이 실행된다.
+
+- 로그인 실패 횟수가 x번인 경우 로그인 제한
+  
+```javascript
+function login_failed() {
+    let cnt = (parseInt(getCookie("fail_cnt")) || 0) + 1;
+    setCookie("fail_cnt", cnt, 1);
+
+    if (cnt >= 3) {
+        setCookie("lock_time", Date.now() + 4 * 60 * 1000, 1);
+        alert("3회 이상 실패, 4분간 로그인 제한");
+    } else {
+        alert(`로그인 실패 (${cnt}/3)`);
+    }
+
+    document.getElementById("login_status").innerText = `실패 횟수: ${cnt}`;
+}
+```
+
+-> fail_cnt라는 이름의 쿠키 값을 가져와 parseInt를 이용해 정수로 변환한다. 값이 없으면 0으로 처리하고 여기에 +1을 더해서 현재 실패 횟수를 계산한다. 이를 cnt라는 변수에 저장한다.
+
+-> 실패횟수를 fail_cnt라는 쿠키 이름으로 cnt 값을 저장하고 이는 1일 동안 유지된다.
+
+-> 실패횟수가 3번 이상이라면 현재 시각인 Date.now()에 4분을 더한 값을 lock_time이라는 쿠키 이름에 저장한다. 그리고 이 쿠키를 통해 4분동안 로그인 제한이 가능하며 "3회 이상 실패, 4분간 로그인 제한"이라는 알림창이 나온다./ 3회 미만일 경우에 로그인 실패횟수만 경고창처럼 알림창이 나온다.
+
+-> login_status라는 요소에 현재 실패횟수를 실시간으로 화면에 표시한다.
+
+```javascript
+function is_login_locked() {
+    return Date.now() < (parseInt(getCookie("lock_time")) || 0);
+}
+```
+-> 이 함수를 통해 로그인이 제한 상태인지 여부를 판단할 수 있다.
+
+-> lock_time이라는 쿠키이름의 값을 가져오고 값이 없으면 null을 반환한다.
+
+-> 현재 시각이 lock_time보다 이전이라면 로그인을 제한하고 있는 중이라는 뜻이다.
+
+```javascript
+if (is_login_locked()) {
+      const remainingSec = Math.ceil((getCookie("lock_time") - Date.now()) / 1000);
+      alert(`로그인 제한 중입니다. (${remainingSec}초 남음)`);
+
+      const status = document.getElementById("login_status");
+      if (status) status.innerText = `로그인 제한 중 (${remainingSec}초 남음)`;
+
+      return false;
+    }
+```
+
+-> is_login_locked() 함수가 true를 반환하는 경우는 현재 시간이 쿠키에 저장된 lock_time보다 이전이고 로그인 제한 시간이 아직 남아있을 때라는 것이다.
+
+-> getcookie("lock_time")은 lock_time이라는 쿠키이름의 값을 가져오고 제한이 풀리는 시간(밀리초 기준)을 뜻하며 Date.now()는 현재 시간(밀리초 기준)이다. 나누기 1000을 하여 초 단위로 바꾸고 
+Math.ceil()은 소수점을 올려 남은 초를 반올림 없이 표시한다. 이를 remainingSec이라는 변수에 저장한다.
+
+-> 로그인 제한 중이라는 메시지와 남은 시간을 알림창으로 보여준다.
+
+-> login_status라는 식별자를 가진 요소가 존재할 경우, 그 요소의 텍스트는 로그인 제한 중 (남은 초 표시)으로 만든다./ return false;는 이후 로그인 처리를 중단시켜서 제한 중일 경우에는 실제 로그인 로직이 실행되지 않도록 막는 기능을 한다.
+
 ## 11주차(암호화와 보안토큰)
 
 ### 11주차 퀴즈
+
+
 
 ## 12주차(모듈화 및 클래스)
 
