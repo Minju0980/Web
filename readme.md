@@ -334,8 +334,92 @@ Math.ceil()은 소수점을 올려 남은 초를 반올림 없이 표시한다. 
 ## 11주차(암호화와 보안토큰)
 
 ### 11주차 퀴즈
+- 세션 암호화 관련 문제
+  * Web CryptoJS API 활용, AES-256-GCM 대칭 암호 알고리즘 구현
+  * 주요기능: 세션에 Session_Storage_pass2로 저장, 로그인 후 복호화도 구현
+ 
+```javascript
+// 키 만들기 - 비밀번호를 32바이트로 맞춰서 쓰기
+async function getKey(password) {
+  const encoder = new TextEncoder();
+  const key = encoder.encode(password.padEnd(32)); // 32바이트로 맞춤
+  return crypto.subtle.importKey(
+    'raw',
+    key,
+    { name: 'AES-GCM' },
+    false,
+    ['encrypt', 'decrypt']
+  );
+}
+```
+-> async function getKey(password) 함수는 비밀번호 문자열을 받아 Web Crypto API용 AES-GCM 키로 변환한다. 그리고 async로 정의되어 있으므로 반환값은 Promise 객체이며, 비동기적인 CryptoKey를 생성한다.
+
+-> TextEncoder는 문자열을 UTF-8형식의 바이트 배열로 변환해주고 password.padEnd(32)는 사용자가 입력한 password가 32글자보다 짧으면 공백 문자로 남은 부분을 채워서 32글자까지 늘리는 것이다.
+그리고 encoder.encode는 문자열을 Uint8Array(바이트 배열)로 변환한다.
+
+-> return crypto.subtle.importKey()는 Web Crypto API의 importKey함수는 원시 바이트 배열로부터 키를 생성한다. 따라서 이 코드는 AES-GCM 알고리즘에 사용할 수 있는 키 객체를 반환한다.
+
+```javascript
+// 암호화
+async function encryptText(text) {
+  const key = await getKey('key'); // 고정 키 또는 사용자 입력 키 사용 가능
+  const iv = crypto.getRandomValues(new Uint8Array(12)); // GCM 추천 IV 12바이트
+
+  const encoded = new TextEncoder().encode(text);
+  const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded);
+
+  // IV,암호문 결합
+  const combined = new Uint8Array(iv.length + encrypted.byteLength);
+  combined.set(iv);
+  combined.set(new Uint8Array(encrypted), iv.length);
+
+  // Base64 문자열로 반환
+  return btoa(String.fromCharCode(...combined));
+}
+```
+-> async function encryptText(text) 함수는 문자열 text를 AES-GCM 방식으로 암호화하는 비동기 함수이다. 반환값은 암호화된 결과를 Base64 인코딩한 문자열이다.
+
+-> 고정 문자열을 사용하여 Web Crypto API에서 사용할 AES-GCM 암호화 키를 생성하고 getKey()는 32바이트로 패딩한 문자열을 바이트 배열로 변환하고 CryptoKey 객체를 생성한다. IV(초기화 벡터)를 랜덤하게 생성하고 
+암호화할 문자열을 UTF-8 형식의 바이트 배열로 변환한다.
+
+-> Web Crypto API를 이용해 AES-GCM 알고리즘으로 암호화하고 결과는 ArrayBuffer 형식으로 반환된다.
+
+-> iv와 암호문을 하나의 배열로 합치기 위해 그 크기만큼의 공간을 만들고 앞부분에 IV를 삽입하며 IV 뒤에 암호화된 바이트 배열을 이어붙인다.
+
+-> 마지막으로 Uint8Array로 변환하고 문자열로 변환한 다음 Base64 인코딩 처리를 한다. 
+
+```javascript
+// 복호화
+async function decryptText(base64) {
+  if (!base64) {
+    console.warn("복호화할 데이터가 없습니다.");
+    return null;
+  }
+
+  const combined = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+  const iv = combined.slice(0, 12);
+  const data = combined.slice(12);
+
+  const key = await getKey('key');
+
+  try {
+    const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, data);
+    return new TextDecoder().decode(decrypted);
+  } catch (e) {
+    console.error("복호화 실패:", e);
+    return null;
+  }
 
 
+}
+```
+-> Base64 문자열이 비어있거나 null인 경우 경고 메시지를 출력하고 복호화를 중단한다. Base64 문자열을 원래 바이너리 문자열로 디코딩하고 이 문자열을 복호화하기 위해 필요한 형태인 Uint8Array로 변환한다.
+
+-> combined의 앞 12바이트는 IV로 사용된다.(encryptText()에서 앞에 붙여놨기 때문에)
+
+-> getKey()를 통해 고정키로부터 AES-GCM용 CryptoKey 객체를 비동기적으로 생성한다.
+
+-> crypto.subtle.decrypt()를 사용하여 AES-GCM 방식으로 복호화를 시도한다. 성공하면 결과는 ArrayBuffer이고 TextDecoder()를 사용해 UTF-8문자열로 바꾼다. 
 
 ## 12주차(모듈화 및 클래스)
 
