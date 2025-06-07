@@ -422,7 +422,7 @@ async function decryptText(base64) {
 -> crypto.subtle.decrypt()를 사용하여 AES-GCM 방식으로 복호화를 시도한다. 성공하면 결과는 ArrayBuffer이고 TextDecoder()를 사용해 UTF-8문자열로 바꾼다. 
 
 ```javascript
-sync function init_logined2(){
+async function init_logined2(){
  if(sessionStorage){
     const base64 = sessionStorage.getItem("Session_Storage_pass2");
     const result = await decryptText(base64); // await 사용
