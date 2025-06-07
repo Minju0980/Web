@@ -471,8 +471,58 @@ login2.js에 있는 session_del()함수에 localStorage.removeItem("jwt_token");
 ## 12주차(모듈화 및 클래스)
 
 ### 12주차 퀴즈
-- 
+- 회원가입 후 객체 내용을 저장하기/로그인 후 복호화된 객체 내용 출력하기
 
+```javascript
+export function session_set2(obj) { //세션 저장
+    let id = document.querySelector("#typeEmailX");
+    let password = document.querySelector("#typePasswordX");
+    let random = new Date(); // 랜덤 타임스탬프
+// 다음 페이지 계속 작성하기
+    if (sessionStorage) {
+      const objString = JSON.stringify(obj); // 객체 -> JSON 문자열 변환
+      console.log("objString:", objString);
+      let en_text = encrypt_text(objString); // 암호화
+      // sessionStorage.setItem("Session_Storage_join", objString);
+      sessionStorage.setItem("Session_Storage_join2", en_text);
+      console.log("암호화된 회원정보 저장됨:", en_text);
+    } else {
+       alert("로컬 스토리지 지원 x");
+    }
+}
+```
+-> session.js에 있는 session_set2()함수에 Session_Storage_join2라는 이름으로 en_text 즉, 전달받은 전체 obj 객체를 JSON 문자열로 만든 후 암호화해서 세션스토리지에 저장한다.
+
+```javascript
+export function decrypt_join() {
+  const k = "key";
+  const rk = k.padEnd(32, " ");
+  const eb = sessionStorage.getItem("Session_Storage_join2"); 
+
+  if (!eb) {
+    console.log("세션에 회원가입 정보가 없습니다.");
+    return;
+  }
+
+  try {
+    const b = decodeByAES256(rk, eb);
+    const user = JSON.parse(b); 
+    console.log("복호화된 회원가입 정보:", user);
+    console.log("이름:", user._name);
+    console.log("이메일:", user._email);
+    console.log("비밀번호:", user._password);
+  } catch (e) {
+    console.error("복호화 실패:", e);
+  }
+}
+```
+-> session.js파일에 추가한 코드이다. k는 암호화/복호화에 사용할 기본 키 문자열이다. rk는 padEnd(32, " ")를 이용해 "key" 문자열을 길이 32의 문자열로 늘려 AES-256 키 형식에 맞춘다.
+
+-> eb는 Session_Storage_join2라는 키로 세션스토리지에서 암호화된 회원정보를 가져온다./세션 스토리지에 값이 없으면 콘솔에 메시지를 출력한다.
+
+-> decodeByAES256()함수로 rk 키를 이용해 복호화를 시도한다. 복호화된 문자열을 JSON 형식이므로 JSON.parse()로 자바스크립트 객체로 변환한다.
+
+-> user._name, user._email 등 객체 속성을 콘솔에 출력한다.
 
 ## 13주차(웹오픈 API)
 
