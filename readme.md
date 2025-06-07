@@ -527,3 +527,25 @@ export function decrypt_join() {
 ## 13주차(웹오픈 API)
 
 ### 13주차 퀴즈
+- 프로필 페이지 접근 제한하기
+
+```HTML5
+<script>
+        window.addEventListener('DOMContentLoaded', () => {
+          const userId = sessionStorage.getItem("Session_Storage_id");
+          if (!userId) {
+            alert("로그인 후 이용할 수 있습니다.");
+            window.location.href = "../index.html";  // 메인 페이지로 이동
+          }
+        });
+      </script>
+```
+-> HTML 문서의 모든 DOM 요소가 로드된 후 해당 함수를 실행한다./ 세션 스토리지에서 Session_Storage_id라는 키에 저장된 값을 가져오고 userId라는 변수에 저장한다.
+
+-> 세션에 Session_Storage_id라는 이름의 값이 없으면 경고창이 나오고 로그인이 필요한 페이지임을 알려준다.
+
+-> 로그인하지 않은 사용자를 메인페이지로 강제 이동시킨다.
+
+- 좌표로 주소 출력하기
+
+카카오 맵 api 가이드에 있는 원본 소스를 조금씩 수정해서 만든 예전에 만들었던 지도 맵에 맞게 자바스크립트, HTML, CSS에 코드를 넣는다.
