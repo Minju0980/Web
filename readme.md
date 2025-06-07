@@ -322,7 +322,7 @@ if (is_login_locked()) {
     }
 ```
 
--> is_login_locked() 함수가 true를 반환하는 경우는 현재 시간이 쿠키에 저장된 lock_time보다 이전이고 로그인 제한 시간이 아직 남아있을 때라는 것이다.
+-> check_xss함수에 들어있는 조건문이다. is_login_locked() 함수가 true를 반환하는 경우는 현재 시간이 쿠키에 저장된 lock_time보다 이전이고 로그인 제한 시간이 아직 남아있을 때라는 것이다.
 
 -> getcookie("lock_time")은 lock_time이라는 쿠키이름의 값을 가져오고 제한이 풀리는 시간(밀리초 기준)을 뜻하며 Date.now()는 현재 시간(밀리초 기준)이다. 나누기 1000을 하여 초 단위로 바꾸고 
 Math.ceil()은 소수점을 올려 남은 초를 반올림 없이 표시한다. 이를 remainingSec이라는 변수에 저장한다.
